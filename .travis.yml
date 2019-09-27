@@ -31,7 +31,7 @@ deploy:
   overwrite: true
   api_key:
     secure: 84467c129b4698d1701d602758b318dceafdd723
-  file: ".pioenvs/nodemcuv2_deploy/firmware.bin"
+  file: ".pio/build/nodemcuv2_deploy/firmware.bin"
 
 
 # env:
