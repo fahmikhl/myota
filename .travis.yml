@@ -18,20 +18,22 @@
  script:
      - platformio run
 
+script:
+- platformio run -e nodemcuv2_deploy
 
-#
-# Template #2: The project is intended to be used as a library with examples.
-#
+deploy:
+  on:
+    repo: fahmikhl/myota
+    all_branches: true
+    condition: $TRAVIS_TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+$
+  skip_cleanup: true
+  provider: releases
+  overwrite: true
+  api_key:
+    secure: 84467c129b4698d1701d602758b318dceafdd723
+  file: ".pioenvs/nodemcuv2_deploy/firmware.bin"
 
-# language: python
-# python:
-#     - "2.7"
-#
-# sudo: false
-# cache:
-#     directories:
-#         - "~/.platformio"
-#
+
 # env:
 #     - PLATFORMIO_CI_SRC=path/to/test/file.c
 #     - PLATFORMIO_CI_SRC=examples/file.ino
