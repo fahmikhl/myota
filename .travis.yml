@@ -13,10 +13,10 @@
 
  install:
     - pip install -U platformio
+    - platformio update
 
-script:
-  - pio --version
-  - platformio run -e nodemcuv2_deploy
+ script:
+     - platformio run -e nodemcuv2_deploy
 
 deploy:
   on:
@@ -28,7 +28,7 @@ deploy:
   overwrite: true
   api_key:
     secure: 84467c129b4698d1701d602758b318dceafdd723
-  file: ".pio/build/nodemcuv2_deploy/firmware.bin"
+  file: ".pioenvs/nodemcuv2_deploy/firmware.bin"
 
 
 # env:
