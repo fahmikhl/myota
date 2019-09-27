@@ -1,0 +1,7 @@
+{
+    "terminal.integrated.env.windows": {
+        "PATH": "C:\\Users\\FAHI\\.platformio\\penv\\Scripts;C:\\Users\\FAHI\\.platformio\\penv;C:\\Python27\\;C:\\Python27\\Scripts;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\play-2.2.6;C:\\xampp\\apache\\bin;C:\\Program Files\\Git\\cmd;C:\\Program Files (x86)\\IVI Foundation\\VISA\\WinNT\\Bin\\;C:\\Program Files\\IVI Foundation\\VISA\\Win64\\Bin\\;C:\\Program Files (x86)\\IVI Foundation\\VISA\\WinNT\\Bin;C:\\Program Files\\Java\\jdk1.8.0_172\\bin;C:\\Users\\FAHI\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Python27;C:\\Python27\\Scripts;C:\\Python27\\;C:\\Python27\\Scripts;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\play-2.2.6;C:\\xampp\\apache\\bin;C:\\Program Files\\Git\\cmd;C:\\Program Files (x86)\\IVI Foundation\\VISA\\WinNT\\Bin\\;C:\\Program Files\\IVI Foundation\\VISA\\Win64\\Bin\\;C:\\Program Files (x86)\\IVI Foundation\\VISA\\WinNT\\Bin;C:\\Program Files\\Java\\jdk1.8.0_172\\bin;C:\\Users\\FAHI\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Python27;C:\\Python27\\Scripts",
+        "PLATFORMIO_CALLER": "vscode"
+    },
+    "git.ignoreLimitWarning": true
+}
