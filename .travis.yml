@@ -28,13 +28,14 @@ deploy:
   overwrite: true
   api_key:
     secure: MMswJdh0UZCVUJ+RC1FyWDJhg+NzqLCAOJNr6wdkSrtIqZVYtGy8S3Ph34JHuHsHSXSjvyRfa/1H0i0OevTFYD56IVItN4d0KsUJX2Ra+Jvkg3bvfP2yAHGzpxrZ0ODpjRXVpCgaSePU3fqPkmzaUQIUMY+RzuuVTrgLEPMEqTIGozAytcab5/ImXK/KzmqXKIeKekA9V7JjWmrRFNUl0WnI0UMxn+cknIwITZECmHaZyPntgH8lQnhpxszeX3RbzEoG0GN6XcfJEEKZobZ9etLtWc8gxao5YbfgNaBDJRl6Sb+XztxmsIJJxNSkizaNzhcvkOEGaoDDJMwdmzCStKcZ09a1YHvfWE85O88/8Z32wBqwGqQhGqW3hDerU8/gjCSbJg/Xvn9d70w8Y41+BdMDLJRqIqSunDeOfVXTpmU2S+4lo5uppYwlX99jYRSfZgfeTk65REtZ8PTt8q4r+8UpySWDIYEBO/okKnMv9yqzBmNHxEqkYC1Og//hI0BRQEaG0ABJHTwekJ5f5XCsJ3Tbxjr8cBx2kDHRLmUAfqyxd8d2EQIRDlaYurLH9HKU0efAKicsnqEnGXkBJYd9/+faQ4Jc//diy5M+CRRX5marQSgfQmW2Xce0+K8LyR8/WiO0cwxX8ANTkMT4Cle48qQjfph8oqTRp7PKCa7eGN8="
-
-  file: ".pio/build/nodemcuv2_deploy/firmware.bin"
-  on:
-    repo: fahmikhl/myota
-    tags: true
-
-
+  file:
+    - ".pio/build/nodemcuv2_deploy/firmware.hex"
+    - ".pio/build/nodemcuv2_deploy/firmware.bin"
+    - firmware.bin
+    - firmware.hex
+    - /.pioenvs/nodemcuv2_deploy/firmware.hex
+    - /.pioenvs/nodemcuv2_deploy/firmware.bin
+  
 # env:
 #     - PLATFORMIO_CI_SRC=path/to/test/file.c
 #     - PLATFORMIO_CI_SRC=examples/file.ino
