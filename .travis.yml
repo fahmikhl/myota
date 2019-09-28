@@ -17,6 +17,7 @@ script:
 deploy:
   on:
     repo: fahmikhl/myota
+    tags: true
     all_branches: true
     condition: $TRAVIS_TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+$
   skip_cleanup: true
@@ -25,3 +26,5 @@ deploy:
   api_key:
     secure: nOOo1cMxwJ5Hz1c06/vVQDw7prAsq+MkroCtkNikv2+KFkD23lzppPpsYuOiyv9r43tpziQSHVKq3vpFGPKK4ADG9QknwuEAI1agweGShL6jCY6dUKzDe5OcStuJZxkjaO/c8/0HTxr9Hs/tOuQ/poV+6XVGNxM537p2mnrDZkeS6b/5FmqWGsL3Eb7Y0C2zytyX0GGkaE+gjrM3on8moxIQdBa+bF1Wnd8fu3nqmbhTN8lWcyzkNVykUoBJUKs11eJmMMIYtD0CvqjhbBnor/baJvQnxgRPpFORlrlnc2myDYzLjewVVwrZdZb77IViQbSWKZY8Yh1PfQSacXHk0c55TjLokkjbWggecp12Hy/e/leARsUSWnanjzpJxrZTEFah3ipgmAIS55OT4aEj9cbrJYbnZNH2Zim857lM8J2eEQvPZMkqdcpdql8vOaTL4ySm1vJLk2gg0o1RM3TvdQ4x3KjLVT4b/ATGehpgZYrRkHd3vSQ9iUq/iLHoAm4ymHHctg5HvESUPJGcUzzFZqBYFbVhow78EmBpnzOPiBf3XWDwob2fRLG0eRmNh06f6DIJ504EV/TKdkvZjYcwLMLwwo+E9YtNfyCc4raVeFUjyRxONdf8eqsejjTI2ynppHEE7kDMmCHAQVLobNQYsoj0sUAw7Uy+ghTJ7W+49Jc=
   file: ".pio/build/nodemcuv2_deploy/firmware.bin"
+
+  
