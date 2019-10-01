@@ -11,15 +11,15 @@ install:
 - pip install -U platformio
 - platformio update
 script:
-- platformio run -e nodemcuv2_deploy
+- platformio run -e nodemcuv2_deploy -v
 - platformio --version
 
-before_deploy:
-- $TRAVIS_TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+$
-- echo "$TRAVIS_TAG" "$TRAVIS_COMMIT"
+#before_deploy:
+#- $TRAVIS_TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+$
+#- echo "$TRAVIS_TAG" "$TRAVIS_COMMIT"
 #- git config --local user.name "fahmikhl"
 #- git config --local user.email ""
-- git tag "$TRAVIS_TAG" "$TRAVIS_COMMIT"
+#- git tag "$TRAVIS_TAG" "$TRAVIS_COMMIT"
 
 deploy:
   tag_name: $TRAVIS_TAG
@@ -28,7 +28,7 @@ deploy:
   on:
     repo: fahmikhl/myota
     all_branches: true
-    #condition: $TRAVIS_TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+$
+    condition: $TRAVIS_TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+$
   skip_cleanup: true
   branches:
       except:
