@@ -14,7 +14,17 @@ script:
 - platformio run -e nodemcuv2_deploy
 - platformio --version
 
+before_deploy:
+- export TRAVIS_TAG="release-$(git rev-parse --short ${TRAVIS_COMMIT})"
+- echo "$TRAVIS_TAG" "$TRAVIS_COMMIT"
+#- git config --local user.name "fahmikhl"
+#- git config --local user.email ""
+- git tag "$TRAVIS_TAG" "$TRAVIS_COMMIT"
+
 deploy:
+  tag_name: $TRAVIS_TAG
+  target_commitish: $TRAVIS_COMMIT
+
   on:
     repo: fahmikhl/myota
     all_branches: true
