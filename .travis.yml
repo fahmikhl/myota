@@ -18,10 +18,8 @@ deploy:
   on:
     repo: fahmikhl/myota
     tags: false
-    branches: 
-      only:
-        - master
-    condition: $TRAVIS_TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+$
+    all_branches: true
+    #condition: $TRAVIS_TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+$
   skip_cleanup: true
   provider: releases
   overwrite: true
