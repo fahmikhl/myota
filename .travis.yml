@@ -14,10 +14,6 @@ script:
 - platformio run -e nodemcuv2_deploy
 - platformio --version
 
-branches:
-  only:
-  - master
-
 deploy:
   on:
     repo: fahmikhl/myota
