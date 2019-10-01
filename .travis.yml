@@ -15,7 +15,7 @@ script:
 - platformio --version
 
 before_deploy:
-- export TRAVIS_TAG="release-$(git rev-parse --short ${TRAVIS_COMMIT})"
+- export TRAVIS_TAG="$TRAVIS_TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+$"
 - echo "$TRAVIS_TAG" "$TRAVIS_COMMIT"
 #- git config --local user.name "fahmikhl"
 #- git config --local user.email ""
@@ -31,8 +31,8 @@ deploy:
     #condition: $TRAVIS_TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+$
   skip_cleanup: true
   branches:
-  except:
-    - /^*-v[0-9]/
+      except:
+      - /^*-v[0-9]/
   provider: releases
   overwrite: true
   api_key:
