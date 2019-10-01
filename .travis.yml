@@ -14,13 +14,16 @@ script:
 - platformio run -e nodemcuv2_deploy
 - platformio --version
 
+branches:
+  only:
+  - master
+
 deploy:
   tag_name: $TRAVIS_TAG 
   on:
     repo: fahmikhl/myota
-    tags: true
     all_branches: true
-    #condition: $TRAVIS_TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+$
+    condition: $TRAVIS_TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+$
   skip_cleanup: true
   provider: releases
   overwrite: true
