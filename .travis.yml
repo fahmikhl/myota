@@ -24,7 +24,8 @@ script:
   on:
     repo: fahmikhl/myota
     all_branches: true
-    condition: $TRAVIS_TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+$
+    tags: true
+   # condition: $TRAVIS_TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+$
   skip_cleanup: true
   provider: releases
   overwrite: true
