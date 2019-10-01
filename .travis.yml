@@ -19,7 +19,6 @@ branches:
   - master
 
 deploy:
-  tag_name: $TRAVIS_TAG 
   on:
     repo: fahmikhl/myota
     all_branches: true
