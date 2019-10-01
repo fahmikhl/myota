@@ -20,16 +20,15 @@ script:
 #- git config --local user.name "fahmikhl"
 #- git config --local user.email ""
 #- git tag "$TRAVIS_TAG" "$TRAVIS_COMMIT"
-
+deploy:
   on:
     repo: fahmikhl/myota
     all_branches: true
     tags: true
    # condition: $TRAVIS_TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+$
-  skip_cleanup: true
-  provider: releases
-  overwrite: true
-  api_key:
+skip_cleanup: true
+provider: releases
+overwrite: true
+api_key:
     secure: Rr1trLVGrID5swgMVggJzMDWhp7xsbQOwaExCkJNJlwUQw9mB5qX6Xbh46C2poIVnOMYPfmZcC2pmyVhRrqKHJwvng+k5nDV5ujOXvxw4mj8BqgcdoDW5Dpa3IzzGOBVi1p5RyuMt6iDxhn5HVb3RR8whZk7wlGyciMmVWQGSjeBWt5+xB5Sc3DYpphzlOsFHCowhUHm0GoZRssuFbnYCoEP6HKYut/M8umC4/Yf+YiL/N/FXp6k2XGVwD17U8Qm74o3wtdEhFD3PAq3m3toOOYeNUI6MNGdCin92diYl8jJPKBmohfA4SYVtv2Oqz0qYUB131Us8ARNr0C0749uYrbdZ7CoTQ7+2d9XozaHbWXElC3bqQKbwHheXxVUIffR028G61YeUhxILcY/KVZVBVLFIy+mUSiIStsPmGh4Xq2AbcnZaUgOkTueS1X0Ykm2oOBJMUYWJ1KtDSexvO1gZ+RYAFiQ5IdJqgh/xBXqYgpCVfQ+benL1zzH4Bpn6yE09Mypn48TZdZVX7MtflOuiYBEnYjH3B0l/UJV7cStymv3En2jIIKZ+snef0hnszO86QYTSU4hoWJiNQ+Mo1n7v50M044u4ReyWk48KYkR/5lLtJICmmQbgsjvqBt4bQo/zeL1ASc0LEZrfZ7mHXBZIHCuC7X4f6k+uAdqZa7QdV4=
-  file: ".pio/build/nodemcuv2_deploy/firmware.bin"
-  #yeah aku mumet gaes
+file: ".pio/build/nodemcuv2_deploy/firmware.bin"
