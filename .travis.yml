@@ -13,17 +13,17 @@ install:
 script:
 - platformio run -e nodemcuv2_deploy
 - platformio --version
-
 deploy:
   on:
     repo: fahmikhl/myota
     tags: true
     all_branches: true
-    condition: $TRAVIS_TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+$
+    condition: "$TRAVIS_TAG =~ ^[0-9]+\\.[0-9]+\\.[0-9]+$"
   skip_cleanup: true
   provider: releases
   overwrite: true
   api_key:
-    secure: AB+3RmtS1FCbrgbt8d7f9Fr5iPXKjewzqDcfn2tPEUR37hRHIyXD0zJDDDcsFj2FHLBu28nmz+NOS59QaGOTrHLj0Uitgr4C4lA5TV7laLkGzDHW00iMP9Aad0r9tvrbzkuMHOdXxc1bk8k5MQ33huQMWAuHPCEKxVZ2I/n3sW3MWZ6Q+fL6rt5GpJqSfYTkBYlZvHarjiuSEefef5vfa1DZbLY/qmwAdFCV3atFx6YHSAPpt+ZXPu3ch6TWth2Q0MyAjGQO3neP4amNFjHpuwfeS1fb5hoMWcRiBhnT306eDc5uX3SD0uTWVRz1JgqTlhAlT6nNcNwrhsGd8pVlXQM4yPBzgIuZSdeAUKYv0Gqy2Nbc9nFPJJRwXib3PQ8s2Fuq5KXs/FiPj/+H18nJ/EG0EBcnQpI11SoJ128JLvDKJOHFwA9tld24nzEFtQifiQRk/aSIrKy5QD39hjOYHwTSLrDp1OMS+sCAEvfdsgZixVT28sEZR8TbJO656VRk+LORev03/8ePcxHhFnescUGXN/ExVjhhh8CLISP1HjU7Bx9meh3+cBK4NGgIbSSOhLYsqT6FBdR9c/tkKC/rlMP6t9V7KtzTEAJ++S8WP0p7tqqTGNM2ShuZtOPn+4KP4XgS5lhRILQOyyChLqeFYHqB3TqTdX0OJQbLwdtv8JE=
+    secure: Gnp0/ziUy31z2EKfI37USnC+vMUOrdVNQWWSpyivpCYHWaQ05RNgCh7qCXC+gYAzFlI2JKerUdToCEJsPJJzczu9xryevrPQuTSY2E+H6P9rryTyFvbKHfWwIPgfMTsRmAGiwFGmBUxq/3qa2o3GcGwsf4qOFFPnq+PW5STXuwAuQ9Kx+m2S/YaYJlG4BGn2bXhtuDYxOXQw6t8DwPmLYtSEoZQVH4r3wQlDAISXr+701/9ir5o+cHVEKOWyt8NFjETsJS3HptTS7OTPBIbx1wFkyw8Y5C8F8dKjYi7G0eg2IeYtmbso+kkc2hZWnODN8G1n0vLd+z11aP5S29aIxhftqMFtU0pIAtMwtI/le1Cf78mxr7NVMhtrPMLIKL7nhIjrX82D4ienniJu5Bjcz3Bzi6lhGNZFTaviBPqg5AR1zkIXSuj9pnWVPmunvH7+2Z0xM0Tcyvz5dPcVZtTzx6YiQmpdKNBV57ulZKYVwUYeU8MLxxU6vsSciim9J9hDhxrVJaJCyIHCqt3zFcrzT59nt0sUrwtvo8I3knoXVKvcPtcPa/UCiuC4iSEu2B0+/zfzP3S4e5OXfawOjV7bzMi/l+TAJNZVDyedjD1npHOQ/otPIq6fs5Mraa/iShapwCQpuwNHzu/L8Mh1Eb1OAso6bSxcOjOL9ypALy0pGn0=
   file: ".pio/build/nodemcuv2_deploy/firmware.bin"
-
+dd:
+  secure: qYrb+0oGMQib6x8iz5MPlaPrPxe8As4dZGXpdCBTvzviv9ctcZRl7QRxGd8XaMz5fKAY1+sgks3mJ18SoPv4luwqi1Ay0JkCgOKfkY9ZQBNiCOR7iReqlwA7Vq9wlqBqgfiJRC44B2x/swe66hJ7pbpPtH7uiVdyQeLXDKEe4Gws7KntGesNZp/M4ze0/cR6o441aRGnpxxPKzqG2MIr7z0q735WzeWhLNG3/ZnB9WZesRH5bkYmJzE47tBHjDF4DTN42fnf+WtMIeydp0ifjuB0vx5LUr/KldWGB8WZAhEQezEWOb/hifl/U4IkRKUT2UdCrylYFRien7DEgDt5GlLRSYZiz/WIsG6e7x9y/Qb0qolWy3rNN637w2h/hrcV5BMJ4rV6EismSk097FBV2U5B5BqfPZ0CXCOWwGLC/zaAaR3s9eAiIu1oJ21b5+4rcB6VJ1UyV/mJKaUWrx5mxiwwD1cUbAgqTw6TSgx7c2YVbpNjQZfunrCTqCll7c1juqzWOalheazU0wPYmATHPnAAoDspIYKOhdA8g9yMMAKfJzFeV2tXBINf6GMRYl55UwIwZKGgdfHqIfhf/+owambMSVKmP6lbSCQaNxQIt+Y5/TaE66AwT2wuyw8m5OLi7alksP3UFHCgIYl6IBKL48zLzuA6XMhH+wv1SyHfGLE=
