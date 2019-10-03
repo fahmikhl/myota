@@ -24,10 +24,10 @@ before_deploy:
 
 deploy:
 
-  branch:
+  branches:
     only:
     -master
-    
+
   on:
     repo: fahmikhl/myota
     #all_branches: true
