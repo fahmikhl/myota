@@ -14,18 +14,20 @@ script:
 - platformio run -e nodemcuv2_deploy
 - platformio --version
 
-deploy:
+before_deploy:
+      # Set up git user name and tag this commit
+      #- git config --local user.name "YOUR GIT USER NAME"
+      #- git config --local user.email "YOUR GIT USER EMAIL"
+      - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
+      - git tag $TRAVIS_TAG
 
-  branches:
-  only:
-  - master
-  - /^deploy-.*$/
+deploy:
 
   on:
     repo: fahmikhl/myota
     all_branches: true
     #condition: $TRAVIS_TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+$
-  #name: "${TRAVIS_TAG)"
+    #name: "${TRAVIS_TAG)"
   skip_cleanup: true
   provider: releases
   overwrite: true
