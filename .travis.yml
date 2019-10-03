@@ -7,6 +7,11 @@ cache:
   - "~/.platformio"
 env:
 - PLATFORMIO_CI_SRC=src/
+
+before_install:
+- export TZ=Asia/Jakarta
+
+
 install:
 - pip install -U platformio
 - platformio update
