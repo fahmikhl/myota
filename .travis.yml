@@ -28,14 +28,9 @@ before_deploy:
       #- git tag $TRAVIS_TAG
 
 deploy:
-
-  branches:
-    only:
-    -master
-
   on:
     repo: fahmikhl/myota
-    #all_branches: true
+    all_branches: true
     #condition: $TRAVIS_TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+$
     #name: "${TRAVIS_TAG)"
   skip_cleanup: true
