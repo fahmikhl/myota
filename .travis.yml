@@ -16,7 +16,8 @@ install:
 - pip install -U platformio
 - platformio update
 script:
-- platformio run -e nodemcuv2_deploy
+#- platformio run -e nodemcuv2_deploy
+- platformio run
 - platformio --version
 
 before_deploy:
