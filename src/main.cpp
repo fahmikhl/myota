@@ -11,7 +11,7 @@
 
 String buildTag = ESCAPEQUOTE(BUILD_TAG);
 
-char auth[] = "ECD0zft5QERr5rrz4zbHn-RaLxHH04S0";
+char auth[] = "eJwSQkMYPxeIIz0PMEZtKLTJc3Aqjejh";
 char ssid[] = "cidro";
 char pass[] = "mbayarsu";
 
@@ -133,8 +133,7 @@ void setup(){
   Serial.println("Booting...");
   setWifi();
   pinMode(ESP_LED, OUTPUT);
-  Blynk.config(auth);  // in place of Blynk.begin(auth, ssid, pass);
-//  Blynk.begin(auth, ssid, pass);
+  Blynk.begin(auth, ssid, pass);
   Serial.println("BUILD_TAG: "+ buildTag);
   updateCheck.start();
 }
