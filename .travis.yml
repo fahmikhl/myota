@@ -18,8 +18,8 @@ install:
 - platformio lib install 415
 - platformio lib install 64@5.13.4
 script:
-#- platformio run -e nodemcuv2_deploy
-- platformio run
+- platformio run -e nodemcuv2_deploy
+#- platformio run
 - platformio --version
 
 before_deploy:
