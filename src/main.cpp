@@ -1,7 +1,7 @@
 #include <WiFiClientSecure.h> 
 #include <ESP8266HTTPClient.h>
 #include <ESP8266httpUpdate.h>
-#include <BlynkSimpleEsp8266.h>
+#include <BlynkSimpleEsp8266_SSL.h>
 #include <ArduinoJson.h>
 #include <Ticker.h>
 #define BLYNK_PRINT Serial
@@ -18,7 +18,6 @@ char pass[] = "mbayarsu";
 const int ESP_LED = 2;
 WidgetTerminal terminal(V12);
 BlynkTimer timer;
-//WidgetLED led0(V21);
 void enableUpdateCheck();
 Ticker updateCheck(enableUpdateCheck, 30000);
 bool doUpdateCheck = true;
@@ -32,8 +31,8 @@ void conBlynk(){
 }
 
 void setWifi(){
-  const char* ssid = "Gateli Lhur";
-  const char* password = "samsat12";
+  const char* ssid = "cidro";
+  const char* password = "mbayarsu";
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
     delay(2000);
@@ -145,5 +144,4 @@ void loop(){
   Blynk.run();
   getVersion();
   DownloadBin();
-
 }
