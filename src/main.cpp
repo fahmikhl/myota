@@ -20,10 +20,10 @@ WidgetTerminal terminal(V12);
 BlynkTimer timer;
 void enableUpdateCheck();
 Ticker updateCheck(enableUpdateCheck, 30000);
-bool doUpdateCheck = true;
+bool doUpdateCheck = false;
 bool download = true;
 void enableUpdateCheck() {
-  doUpdateCheck = !doUpdateCheck;
+  doUpdateCheck = true;
 }
 
 void conBlynk(){
@@ -46,10 +46,9 @@ void setWifi(){
 }
 
 void getVersion(){
-  if (doUpdateCheck) {  
+  if (doUpdateCheck == true) {  
     if (WiFi.status() == WL_CONNECTED) {
       terminal.clear();
-      Serial.println("Connected");
       HTTPClient http;  //Object of class HTTPClient
       http.begin("https://api.github.com/repos/fahmikhl/myota/releases/latest","59 74 61 88 13 CA 12 34 15 4D 11 0A C1 7F E6 67 07 69 42 F5");
       
@@ -57,7 +56,7 @@ void getVersion(){
       if (httpCode > 0) {
         Serial.println(httpCode);
         String payload = http.getString();   //Get the request response payload
-        Serial.println(payload);  
+      //  Serial.println(payload);  
         // Parsing
         const size_t capacity = JSON_ARRAY_SIZE(1) + JSON_OBJECT_SIZE(13) + 3*JSON_OBJECT_SIZE(18) + 3120;
         DynamicJsonBuffer jsonBuffer(capacity);
@@ -80,6 +79,7 @@ void getVersion(){
       http.end();   //Close connection
       }
     } 
+    doUpdateCheck = false;
   }
 }
 
