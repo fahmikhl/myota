@@ -17,23 +17,16 @@ install:
 - platformio update 
 - platformio lib install 415
 - platformio lib install 64@5.13.4
+- export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%y%m%d%H%M%S')}
+
 script:
 - platformio run -e nodemcuv2_deploy
 - platformio --version
-
-before_deploy:
-    - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%y%m%d%H%M%S')}
-    - 
-
+ 
 deploy:
 
   on:
-    repo: fahmikhl/myota
-    branches:
-      only:
-        -master
-  
-    #  all_branches: true
+    all_branches: true
     #condition: $TRAVIS_TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+$
     #name: "${TRAVIS_TAG)"
   skip_cleanup: true
