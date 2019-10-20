@@ -123,10 +123,10 @@ if (doUpdateCheck == true) {
           
         case HTTP_UPDATE_OK:
           Serial.println("Updating FIrmware...");
-          terminal.println("\nUpdating FIrmware...");
+          terminal.println("Updating FIrmware...");
           terminal.flush();
       }
-      if (clear==8){
+      if (clear==5){
         clear = 0;
         terminal.clear();
       }
@@ -135,21 +135,8 @@ if (doUpdateCheck == true) {
  }
 }
 
-
-BLYNK_WRITE(V25){
-    if (param.asInt()) {  
-     DownloadBin();
-    } 
-  }
-
-BLYNK_WRITE(V26)
-  {
-    if (param.asInt()){ 
-      DownloadBin();
-    }
-  }
-
 void setup(){
+  terminal.clear();
   Serial.begin(9600);
   Serial.println("Booting...");
   terminal.println("Booting........");
@@ -157,7 +144,7 @@ void setup(){
   pinMode(ESP_LED, OUTPUT);
   Blynk.begin(auth, ssid, pass);
   Serial.println("Current Version: "+ buildTag);
-  terminal.println("\nCurrent Version: ");
+  terminal.println("Current Version: ");
   terminal.println(buildTag);
   terminal.flush();
   updateCheck.start();
@@ -169,3 +156,9 @@ void loop(){
  // getVersion();
   DownloadBin();
 }
+
+  BLYNK_WRITE(V25){
+    if (param.asInt()) {  
+     DownloadBin();
+    } 
+  }
