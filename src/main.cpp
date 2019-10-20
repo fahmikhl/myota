@@ -20,7 +20,7 @@ const int ESP_LED = 2;
 WidgetTerminal terminal(V12);
 BlynkTimer timer;
 void enableUpdateCheck();
-Ticker updateCheck(enableUpdateCheck, 600000);
+Ticker updateCheck(enableUpdateCheck, 60000);
 bool doUpdateCheck = false;
 bool download = true;
 void enableUpdateCheck() {
@@ -41,7 +41,7 @@ void setWifi(){
   }
   if (WiFi.status() == WL_CONNECTED) {
      Serial.println("Connected !!");
-     terminal.println("WiFi Connected\n");
+     terminal.println("WiFi Connected");
      digitalWrite(ESP_LED, LOW);
   }
 }
@@ -115,7 +115,7 @@ if (doUpdateCheck == true) {
 
         case HTTP_UPDATE_NO_UPDATES:
           Serial.println(" Already in Current Version");
-          terminal.println("\nAlready in Current Version");
+          terminal.println("Already in Current Version");
           terminal.println(buildTag);
           terminal.flush();
           clear=clear+1;
@@ -138,7 +138,7 @@ if (doUpdateCheck == true) {
 
 BLYNK_WRITE(V25){
     if (param.asInt()) {  
-    // Serial.print( "\nCurrent firmware version: " );
+     DownloadBin();
     } 
   }
 
@@ -152,7 +152,7 @@ BLYNK_WRITE(V26)
 void setup(){
   Serial.begin(9600);
   Serial.println("Booting...");
-  terminal.println("Booting...: ");
+  terminal.println("Booting........");
   setWifi();
   pinMode(ESP_LED, OUTPUT);
   Blynk.begin(auth, ssid, pass);
@@ -167,5 +167,5 @@ void loop(){
   updateCheck.update();  
   Blynk.run();
  // getVersion();
- // DownloadBin();
+  DownloadBin();
 }
