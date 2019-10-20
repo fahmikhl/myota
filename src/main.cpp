@@ -15,6 +15,7 @@ char auth[] = "eJwSQkMYPxeIIz0PMEZtKLTJc3Aqjejh";
 char ssid[] = "cidro";
 char pass[] = "mbayarsu";
 
+int clear = 0;
 const int ESP_LED = 2;
 WidgetTerminal terminal(V12);
 BlynkTimer timer;
@@ -97,7 +98,10 @@ void getVersion(){
 
 void DownloadBin(){
  //if (download == false){
-if (doUpdateCheck == true) { 
+if (doUpdateCheck == true) {
+    Serial.println("Checking Firmware...");
+    terminal.println("Checking Firmware...\n");
+    terminal.flush();
   if (WiFi.status() == WL_CONNECTED) {
       //downloading file firmware.bin
       t_httpUpdate_return ret = ESPhttpUpdate.update("http://ota.firmandev.tech/myota/firmware.php?tag="+ buildTag );
@@ -111,16 +115,20 @@ if (doUpdateCheck == true) {
 
         case HTTP_UPDATE_NO_UPDATES:
           Serial.println(" Already in Current Version");
-          terminal.println("\nAlready in Current Version\n");
+          terminal.println("\nAlready in Current Version");
           terminal.println(buildTag);
           terminal.flush();
-          terminal.clear();
+          clear=clear+1;
           break;
           
         case HTTP_UPDATE_OK:
           Serial.println("Updating FIrmware...");
           terminal.println("\nUpdating FIrmware...");
           terminal.flush();
+      }
+      if (clear==2){
+        clear = 0;
+        terminal.clear();
       }
     }
   doUpdateCheck = false;
@@ -144,6 +152,7 @@ BLYNK_WRITE(V26)
 void setup(){
   Serial.begin(9600);
   Serial.println("Booting...");
+  terminal.println("Booting...: ");
   setWifi();
   pinMode(ESP_LED, OUTPUT);
   Blynk.begin(auth, ssid, pass);
