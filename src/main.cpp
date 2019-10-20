@@ -20,7 +20,7 @@ const int ESP_LED = 2;
 WidgetTerminal terminal(V12);
 BlynkTimer timer;
 void enableUpdateCheck();
-Ticker updateCheck(enableUpdateCheck, 30000);
+Ticker updateCheck(enableUpdateCheck, 600000);
 bool doUpdateCheck = false;
 bool download = true;
 void enableUpdateCheck() {
@@ -101,7 +101,7 @@ void DownloadBin(){
 if (doUpdateCheck == true) {
     Serial.println("Checking Firmware...");
     terminal.println("Checking Firmware...\n");
-    terminal.flush();
+    //terminal.flush();
   if (WiFi.status() == WL_CONNECTED) {
       //downloading file firmware.bin
       t_httpUpdate_return ret = ESPhttpUpdate.update("http://ota.firmandev.tech/myota/firmware.php?tag="+ buildTag );
@@ -126,7 +126,7 @@ if (doUpdateCheck == true) {
           terminal.println("\nUpdating FIrmware...");
           terminal.flush();
       }
-      if (clear==2){
+      if (clear==8){
         clear = 0;
         terminal.clear();
       }
@@ -167,5 +167,5 @@ void loop(){
   updateCheck.update();  
   Blynk.run();
  // getVersion();
-  DownloadBin();
+ // DownloadBin();
 }
