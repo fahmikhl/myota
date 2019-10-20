@@ -99,10 +99,6 @@ void DownloadBin(){
  //if (download == false){
 if (doUpdateCheck == true) { 
   if (WiFi.status() == WL_CONNECTED) {
-    Serial.println("Downloading Firmware...");
-    terminal.println("\nDownloading Firmware...\n");
-    terminal.flush();
-
       //downloading file firmware.bin
       t_httpUpdate_return ret = ESPhttpUpdate.update("http://ota.firmandev.tech/myota/firmware.php?tag="+ buildTag );
 
@@ -116,12 +112,14 @@ if (doUpdateCheck == true) {
         case HTTP_UPDATE_NO_UPDATES:
           Serial.println(" Already in Current Version");
           terminal.println("\nAlready in Current Version\n");
+          terminal.println(buildTag);
           terminal.flush();
+          terminal.clear();
           break;
           
         case HTTP_UPDATE_OK:
-          Serial.println("FIRMWARE UPDATED!");
-          terminal.println("\nFIRMWARE UPDATED!\n");
+          Serial.println("Updating FIrmware...");
+          terminal.println("\nUpdating FIrmware...");
           terminal.flush();
       }
     }
