@@ -17,7 +17,7 @@ install:
 - platformio update 
 - platformio lib install 415
 - platformio lib install 64@5.13.4
-- export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%y%m%d%H%M%S')}
+# export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%y%m%d%H%M%S')}
 
 script:
 - platformio run -e nodemcuv2_deploy
