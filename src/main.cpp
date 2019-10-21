@@ -17,7 +17,7 @@ char pass[] = "mbayarsu";
 
 int clear = 0;
 const int ESP_LED = 2;
-cons int ledBlink = 14;
+const int ledBlink = 14;
 WidgetTerminal terminal(V12);
 BlynkTimer timer;
 void enableUpdateCheck();
@@ -142,7 +142,7 @@ void setup(){
   Serial.println("Booting...");
   terminal.println("Booting........");
   setWifi();
-  conBlynk()
+  conBlynk();
   pinMode(ESP_LED, OUTPUT);
   Serial.println("Current Version: "+ buildTag);
   terminal.println("Current Version: ");
@@ -162,7 +162,7 @@ void loop(){
 }
 
 BLYNK_WRITE(V25){
-    if (param.asInt == 1) {  
+    if (param.asInt() == 1) {  
      DownloadBin();
   } 
 }
