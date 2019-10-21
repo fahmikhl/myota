@@ -22,7 +22,7 @@ WidgetTerminal terminal(V12);
 BlynkTimer timer;
 void enableUpdateCheck();
 Ticker updateCheck(enableUpdateCheck, 30000); // timer for check update with interval 60s
-bool doUpdateCheck = false;
+bool doUpdateCheck = true;
 bool download = true;
 void enableUpdateCheck() {
   doUpdateCheck = true;
@@ -30,6 +30,7 @@ void enableUpdateCheck() {
 //=================Blynk-Conn=============================
 bool isFirstConnect = true;
 void conBlynk(){ 
+  Blynk.begin(auth, ssid, pass);
   if (isFirstConnect) {
     Blynk.syncVirtual(V12, V24, V25);
     isFirstConnect = false;
