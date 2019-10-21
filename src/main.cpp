@@ -11,8 +11,8 @@
 String buildTag = ESCAPEQUOTE(BUILD_TAG);
 
 char auth[] = "eJwSQkMYPxeIIz0PMEZtKLTJc3Aqjejh";
-char ssid[] = "cidro";
-char pass[] = "mbayarsu";
+char ssid[] = "myota";
+char pass[] = "myota123";
 
 
 int clear = 0;
@@ -38,8 +38,8 @@ void conBlynk(){
 }
 //==================Wifi-Setting==========================
 void setWifi(){
-  const char* ssid = "cidro";
-  const char* password = "mbayarsu";
+  const char* ssid = "myota";
+  const char* password = "myota123";
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
     delay(2000);
