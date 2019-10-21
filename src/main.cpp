@@ -8,29 +8,34 @@
 // Stringifying the BUILD_TAG parameter
 #define TEXTIFY(A) #A
 #define ESCAPEQUOTE(A) TEXTIFY(A)
-
 String buildTag = ESCAPEQUOTE(BUILD_TAG);
 
 char auth[] = "eJwSQkMYPxeIIz0PMEZtKLTJc3Aqjejh";
 char ssid[] = "cidro";
 char pass[] = "mbayarsu";
 
+
 int clear = 0;
 const int ESP_LED = 2;
+cons int ledBlink = 14;
 WidgetTerminal terminal(V12);
 BlynkTimer timer;
 void enableUpdateCheck();
-Ticker updateCheck(enableUpdateCheck, 60000);
+Ticker updateCheck(enableUpdateCheck, 30000); // timer for check update with interval 60s
 bool doUpdateCheck = false;
 bool download = true;
 void enableUpdateCheck() {
   doUpdateCheck = true;
 }
-
-void conBlynk(){
-  
+//=================Blynk-Conn=============================
+bool isFirstConnect = true;
+void conBlynk(){ 
+  if (isFirstConnect) {
+    Blynk.syncVirtual(V12, V24, V25);
+    isFirstConnect = false;
+  }  
 }
-
+//==================Wifi-Setting==========================
 void setWifi(){
   const char* ssid = "cidro";
   const char* password = "mbayarsu";
@@ -45,12 +50,12 @@ void setWifi(){
      digitalWrite(ESP_LED, LOW);
   }
 }
-
+//====================================Get-Version============================
 void getVersion(){
   if (doUpdateCheck == true) {  
     if (WiFi.status() == WL_CONNECTED) {
       terminal.clear();
-      HTTPClient http;  //Object of class HTTPClient
+      HTTPClient http; 
       http.begin("https://api.github.com/repos/fahmikhl/myota/releases/latest","59 74 61 88 13 CA 12 34 15 4D 11 0A C1 7F E6 67 07 69 42 F5");
       delay(500);
       int httpCode = http.GET();                   
@@ -95,15 +100,13 @@ void getVersion(){
   }
   
 }
-
+//=====================================Download Firmware=====================================
 void DownloadBin(){
- //if (download == false){
-if (doUpdateCheck == true) {
-    Serial.println("Checking Firmware...");
-    terminal.println("Checking Firmware...\n");
-    //terminal.flush();
+
+  Serial.println("Checking Firmware...");
+  terminal.println("Checking Firmware...\n");
   if (WiFi.status() == WL_CONNECTED) {
-      //downloading file firmware.bin
+      //==========================downloading firmware.bin with HTTP OTA================
       t_httpUpdate_return ret = ESPhttpUpdate.update("http://ota.firmandev.tech/myota/firmware.php?tag="+ buildTag );
 
       switch(ret) {
@@ -127,12 +130,10 @@ if (doUpdateCheck == true) {
           terminal.flush();
       }
       if (clear==5){
-        clear = 0;
         terminal.clear();
+        clear = 0;
       }
-    }
-  doUpdateCheck = false;
- }
+  }
 }
 
 void setup(){
@@ -141,8 +142,8 @@ void setup(){
   Serial.println("Booting...");
   terminal.println("Booting........");
   setWifi();
+  conBlynk()
   pinMode(ESP_LED, OUTPUT);
-  Blynk.begin(auth, ssid, pass);
   Serial.println("Current Version: "+ buildTag);
   terminal.println("Current Version: ");
   terminal.println(buildTag);
@@ -154,11 +155,14 @@ void loop(){
   updateCheck.update();  
   Blynk.run();
  // getVersion();
-  DownloadBin();
+  if (doUpdateCheck == true){
+    DownloadBin();
+    doUpdateCheck = false;
+  }
 }
 
-  BLYNK_WRITE(V25){
-    if (param.asInt()) {  
+BLYNK_WRITE(V25){
+    if (param.asInt == 1) {  
      DownloadBin();
-    } 
-  }
+  } 
+}
