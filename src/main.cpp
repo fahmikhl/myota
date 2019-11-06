@@ -129,6 +129,7 @@ void DownloadBin(){
           Serial.println("Updating FIrmware...");
           terminal.println("Updating FIrmware...");
           terminal.flush();
+          delay(1000);
       }
       if (clear==5){
         terminal.clear();
