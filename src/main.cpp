@@ -38,8 +38,8 @@ void conBlynk(){
 }
 //==================Wifi-Setting==========================
 void setWifi(){
-  const char* ssid = "myota";
-  const char* password = "myota123";
+  const char* ssid = "cidro";
+  const char* password = "mbayarsu";
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
     delay(2000);
