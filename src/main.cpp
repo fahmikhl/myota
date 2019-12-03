@@ -49,7 +49,7 @@ void setWifi(){
   if (WiFi.status() == WL_CONNECTED) {
      Serial.println("Connected !!");
      terminal.println("WiFi Connected");
-     digitalWrite(ESP_LED, LOW);
+    // digitalWrite(ESP_LED, LOW);
   }
 }
 //====================================Get-Version============================
@@ -157,6 +157,7 @@ void setup(){
 void loop(){
   updateCheck.update();  
   Blynk.run();
+  nyalaled();
  // getVersion();
   if (doUpdateCheck == true){
     DownloadBin();
@@ -164,6 +165,11 @@ void loop(){
   }
 }
 
+void nyalaled(){
+  digitalWrite(ESP_LED, LOW);
+  delay(1000);
+  digitalWrite(ESP_LED, HIGH);
+}
 //
 
 BLYNK_WRITE(V25){
