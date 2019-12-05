@@ -158,7 +158,7 @@ void setup(){
 void loop(){
   updateCheck.update();  
   Blynk.run();
-  nyalaled();
+  // nyalaled();
  // getVersion();
   if (doUpdateCheck == true){
     DownloadBin();
@@ -166,11 +166,13 @@ void loop(){
   }
 }
 
-void nyalaled (){
+/*
+void nyalaled(){
   digitalWrite(ESP_LED, LOW);
   delay(1000);
   digitalWrite(ESP_LED, HIGH);
 }
+*/
 //
 
 BLYNK_WRITE(V25){
