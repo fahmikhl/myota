@@ -139,9 +139,6 @@ void DownloadBin(){
   }
 }
 
-
-
-
 void setup(){
   terminal.clear();
   Serial.begin(9600);
@@ -180,3 +177,4 @@ BLYNK_WRITE(V25){
      DownloadBin();
   } 
 }
+
