@@ -27,7 +27,7 @@ deploy:
 
   on:
     all_branches: true
-  # name: "${TRAVIS_TAG)"
+  name: "001 + ${TRAVIS_TAG)"
   skip_cleanup: true
   provider: releases
   overwrite: true
