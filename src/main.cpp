@@ -1,36 +1,43 @@
-#include <WiFiClientSecure.h> 
+#include <ESP8266WiFi.h>          //https://github.com/esp8266/Arduino
+#include <DNSServer.h>
+#include <ESP8266WebServer.h>
+#include <WiFiManager.h>         //https://github.com/tzapu/WiFiManager
 #include <ESP8266HTTPClient.h>
 #include <ESP8266httpUpdate.h>
-#include <BlynkSimpleEsp8266_SSL.h>
+#include <BlynkSimpleEsp8266.h>
 #include <ArduinoJson.h>
 #include <Ticker.h>
+
+//==============================INISIALISASI=====================================
 #define BLYNK_PRINT Serial
-// Stringifying the BUILD_TAG parameter
 #define TEXTIFY(A) #A
 #define ESCAPEQUOTE(A) TEXTIFY(A)
 String buildTag = ESCAPEQUOTE(BUILD_TAG);
 
-char auth[] = "eJwSQkMYPxeIIz0PMEZtKLTJc3Aqjejh";
-char ssid[] = "myota";
-char pass[] = "myota123";
-
+char blynk_token[] = "eJwSQkMYPxeIIz0PMEZtKLTJc3Aqjejh";
+char server[] = "blynk-cloud.com";
 
 int clear = 0;
 const int ESP_LED = 2;
-const int ledBlink = 14;
+const int MCU_LED = 12;
 WidgetTerminal terminal(V12);
 BlynkTimer timer;
 void enableUpdateCheck();
-Ticker updateCheck(enableUpdateCheck, 30000); // timer for check update with interval 60s
+Ticker updateCheck(enableUpdateCheck, 30000); // timer for check update with interval 30s
 bool doUpdateCheck = true;
 bool download = true;
+WiFiManager wifiManager;
+
+//=================== PROSEDUR & FUNGSI =====================
 void enableUpdateCheck() {
   doUpdateCheck = true;
 }
+
 //=================Blynk-Conn=============================
 bool isFirstConnect = true;
 void conBlynk(){ 
-  Blynk.begin(auth, ssid, pass);
+  Blynk.config(blynk_token, server, 8080);
+  Blynk.connect();
   if (isFirstConnect) {
     Blynk.syncVirtual(V12, V24, V25);
     isFirstConnect = false;
@@ -38,21 +45,12 @@ void conBlynk(){
 }
 
 //==================Wifi-Setting==========================
-void setWifi(){
-  const char* ssid = "cidro";
-  const char* password = "mbayarsu";
-  WiFi.begin(ssid, password);
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(2000);
-    Serial.println("Connecting...");
-  }
-  if (WiFi.status() == WL_CONNECTED) {
-     Serial.println("Connected !!");
-     terminal.println("WiFi Connected");
-     // digitalWrite(ESP_LED, LOW);
-  }
+void resetWifi(){
+  wifiManager.resetSettings();
+  delay(1000);
+  ESP.reset();
+  delay(3000);
 }
-
 //=====================================Download Firmware=====================================
 void DownloadBin(){
 
@@ -92,23 +90,29 @@ void DownloadBin(){
 
 void setup(){
   terminal.clear();
-  Serial.begin(9600);
-  Serial.println("Booting...");
+  Serial.begin(115200);
   terminal.println("Booting........");
-  setWifi();
+  wifiManager.autoConnect("DevOps");
   conBlynk();
-  pinMode(ESP_LED, OUTPUT);
-  Serial.println("Current Version: "+ buildTag);
   terminal.println("Current Version: ");
   terminal.println(buildTag);
-  terminal.flush();
   updateCheck.start();
+  pinMode(MCU_LED, OUTPUT);
+  pinMode(ESP_LED, OUTPUT);
+  updateCheck.start(); 
 }
 
 void loop(){
-  updateCheck.update();  
+  updateCheck.update(); 
   Blynk.run();
+  
+  digitalWrite(MCU_LED, HIGH);
+  delay(1000);
+  digitalWrite(MCU_LED, LOW);
+  delay(1000);
+  
   if (doUpdateCheck == true){
+    
     DownloadBin();
     doUpdateCheck = false;
   }
