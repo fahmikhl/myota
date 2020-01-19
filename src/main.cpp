@@ -33,6 +33,7 @@ void enableUpdateCheck() {
   doUpdateCheck = true;
 }
 
+
 //=================Blynk-Conn=============================
 bool isFirstConnect = true;
 void conBlynk(){ 
@@ -112,7 +113,6 @@ void loop(){
   delay(1000);
   
   if (doUpdateCheck == true){
-    
     DownloadBin();
     doUpdateCheck = false;
   }
