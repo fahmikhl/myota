@@ -33,7 +33,6 @@ void enableUpdateCheck() {
   doUpdateCheck = true;
 }
 
-
 //=================Blynk-Conn=============================
 bool isFirstConnect = true;
 void conBlynk(){ 
@@ -94,6 +93,9 @@ void setup(){
   Serial.begin(115200);
   terminal.println("Booting........");
   wifiManager.autoConnect("DevOps");
+ /* if (!wifiManager.autoConnect()) {
+    resetWifi();
+  } */
   conBlynk();
   terminal.println("Current Version: ");
   terminal.println(buildTag);
@@ -107,20 +109,26 @@ void loop(){
   updateCheck.update(); 
   Blynk.run();
   
+  //========Bagian Program Utama, sesuaikan alatmu=========
   digitalWrite(MCU_LED, HIGH);
   delay(1000);
   digitalWrite(MCU_LED, LOW);
   delay(1000);
-  
+  //======== Batas akhir program utama ===================
+
   if (doUpdateCheck == true){
     DownloadBin();
     doUpdateCheck = false;
   }
 }
 
-
 BLYNK_WRITE(V25){
     if (param.asInt() == 1) {  
      DownloadBin();
+  } 
+}
+BLYNK_WRITE(V24){
+    if (param.asInt() == 1) {  
+      resetWifi();
   } 
 }
