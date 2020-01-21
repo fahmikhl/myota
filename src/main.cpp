@@ -50,8 +50,8 @@ void conBlynk(){
 void resetWifi(){
   wifiManager.resetSettings();
   delay(1000);
- // ESP.reset();
- //delay(3000);
+  ESP.reset();
+  delay(3000);
 }
 //=====================================Download Firmware=====================================
 void DownloadBin(){
