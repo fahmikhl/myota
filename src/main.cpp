@@ -19,7 +19,9 @@ char server[] = "blynk-cloud.com";
 
 int clear = 0;
 const int ESP_LED = 2;
-const int MCU_LED = 12;
+int ledpin = 5; //D1
+int button = 4; //D2
+int buttonState=0;
 WidgetTerminal terminal(V12);
 BlynkTimer timer;
 void enableUpdateCheck();
@@ -48,8 +50,8 @@ void conBlynk(){
 void resetWifi(){
   wifiManager.resetSettings();
   delay(1000);
-  ESP.reset();
-  delay(3000);
+ // ESP.reset();
+ //delay(3000);
 }
 //=====================================Download Firmware=====================================
 void DownloadBin(){
@@ -100,7 +102,8 @@ void setup(){
   terminal.println("Current Version: ");
   terminal.println(buildTag);
   updateCheck.start();
-  pinMode(MCU_LED, OUTPUT);
+  pinMode(ledpin, OUTPUT);
+  pinMode(button, INPUT);
   pinMode(ESP_LED, OUTPUT);
   updateCheck.start(); 
 }
@@ -108,8 +111,12 @@ void setup(){
 void loop(){
   updateCheck.update(); 
   Blynk.run();
-  
+
   //========Bagian Program Utama, sesuaikan alatmu=========
+  buttonState=digitalRead(button); 
+  if (buttonState==1){
+    resetWifi();
+  }
   digitalWrite(MCU_LED, HIGH);
   delay(1000);
   digitalWrite(MCU_LED, LOW);
