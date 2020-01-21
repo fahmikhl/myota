@@ -117,9 +117,9 @@ void loop(){
   if (buttonState==1){
     resetWifi();
   }
-  digitalWrite(MCU_LED, HIGH);
+  digitalWrite(ledpin, HIGH);
   delay(1000);
-  digitalWrite(MCU_LED, LOW);
+  digitalWrite(ledpin, LOW);
   delay(1000);
   //======== Batas akhir program utama ===================
 
