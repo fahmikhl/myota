@@ -115,7 +115,7 @@ void loop(){
   //========Bagian Program Utama, sesuaikan alatmu=========
   buttonState=digitalRead(button); 
   if (buttonState==1){
-    resetWifi();
+ //   resetWifi();
   }
   digitalWrite(ledpin, HIGH);
   delay(1000);
