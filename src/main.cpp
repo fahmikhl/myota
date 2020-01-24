@@ -67,7 +67,7 @@ void DownloadBin(){
       //==========================downloading firmware.bin with HTTP OTA================
        if (stable){
         terminal.println("Stable");
-        t_httpUpdate_return ret = ESPhttpUpdate.update("http://ota.firmandev.tech/myota/firmware.php?tag="+ buildTag );
+        t_httpUpdate_return ret = ESPhttpUpdate.update("http://ota.firmandev.tech/myota/stable.php?tag="+ buildTag );
        
         switch(ret) {
          case HTTP_UPDATE_FAILED:
@@ -92,7 +92,7 @@ void DownloadBin(){
        }
       }else if (!stable){
         terminal.println("Unstable");
-        t_httpUpdate_return ret = ESPhttpUpdate.update("http://ota.firmandev.tech/untsable/test.php?tag="+ buildTag );
+        t_httpUpdate_return ret = ESPhttpUpdate.update("http://ota.firmandev.tech/myota/unstable.php?tag="+ buildTag );
         switch(ret) {
          case HTTP_UPDATE_FAILED:
           Serial.printf("UPDATE ERROR (%d): %s", ESPhttpUpdate.getLastError(), ESPhttpUpdate.getLastErrorString().c_str());
