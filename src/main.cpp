@@ -90,10 +90,9 @@ void DownloadBin(){
           terminal.flush();
           delay(1000);
        }
-      }else{
+      }else if (!stable){
         terminal.println("Unstable");
-        terminal.flush();
-        t_httpUpdate_return ret = ESPhttpUpdate.update("http://ota.firmandev.tech/myota/test.php?tag="+ buildTag );
+        t_httpUpdate_return ret = ESPhttpUpdate.update("http://ota.firmandev.tech/untsable/test.php?tag="+ buildTag );
         switch(ret) {
          case HTTP_UPDATE_FAILED:
           Serial.printf("UPDATE ERROR (%d): %s", ESPhttpUpdate.getLastError(), ESPhttpUpdate.getLastErrorString().c_str());
