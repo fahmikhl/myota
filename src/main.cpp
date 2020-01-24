@@ -8,7 +8,7 @@
 #include <ArduinoJson.h>
 #include <Ticker.h>
 //================Version Steble or Unstable Conf ========
-bool stable = true;
+bool stable = false;
 
 //==============================INISIALISASI=====================================
 #define BLYNK_PRINT Serial
