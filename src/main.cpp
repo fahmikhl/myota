@@ -7,6 +7,8 @@
 #include <BlynkSimpleEsp8266.h>
 #include <ArduinoJson.h>
 #include <Ticker.h>
+//================Version Steble or Unstable Conf ========
+bool stable = true;
 
 //==============================INISIALISASI=====================================
 #define BLYNK_PRINT Serial
@@ -28,7 +30,6 @@ void enableUpdateCheck();
 Ticker updateCheck(enableUpdateCheck, 30000); // timer for check update with interval 30s
 bool doUpdateCheck = true;
 bool download = true;
-bool stable = true;
 WiFiManager wifiManager;
 
 //=================== PROSEDUR & FUNGSI =====================
@@ -54,6 +55,8 @@ void resetWifi(){
   ESP.reset();
   delay(3000);
 }
+
+
 //=====================================Download Firmware=====================================
 void DownloadBin(){
 
@@ -63,7 +66,7 @@ void DownloadBin(){
   if (WiFi.status() == WL_CONNECTED) {
       //==========================downloading firmware.bin with HTTP OTA================
        if (stable){
-        terminal.println("Stable Version");
+        terminal.println("Stable");
         t_httpUpdate_return ret = ESPhttpUpdate.update("http://ota.firmandev.tech/myota/firmware.php?tag="+ buildTag );
        
         switch(ret) {
@@ -88,7 +91,7 @@ void DownloadBin(){
           delay(1000);
        }
       }else{
-        terminal.println("Unstable Version");
+        terminal.println("Unstable");
         terminal.flush();
         t_httpUpdate_return ret = ESPhttpUpdate.update("http://ota.firmandev.tech/myota/test.php?tag="+ buildTag );
         switch(ret) {
@@ -99,7 +102,7 @@ void DownloadBin(){
           break;
 
          case HTTP_UPDATE_NO_UPDATES:
-          Serial.println(" Already in Current Version");
+          Serial.println(" You're in Current Version");
           terminal.println("Already in Current Version");
           terminal.println(buildTag);
           terminal.flush();
