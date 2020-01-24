@@ -59,28 +59,21 @@ void DownloadBin(){
 
   Serial.println("Checking Firmware...");
   terminal.println("Checking Firmware...\n");
-  t_httpUpdate_return ret;
+  
   if (WiFi.status() == WL_CONNECTED) {
       //==========================downloading firmware.bin with HTTP OTA================
-      if (stable){
+       if (stable){
         terminal.println("Stable Version");
         t_httpUpdate_return ret = ESPhttpUpdate.update("http://ota.firmandev.tech/myota/firmware.php?tag="+ buildTag );
-        goto report;
-      }else{
-        terminal.println("Unstable Version");
-        terminal.flush();
-        t_httpUpdate_return ret = ESPhttpUpdate.update("http://ota.firmandev.tech/myota/test.php?tag="+ buildTag );
-        goto report;
-      }
-     report : 
-      switch(ret) {
-        case HTTP_UPDATE_FAILED:
+       
+        switch(ret) {
+         case HTTP_UPDATE_FAILED:
           Serial.printf("UPDATE ERROR (%d): %s", ESPhttpUpdate.getLastError(), ESPhttpUpdate.getLastErrorString().c_str());
           terminal.printf("\nUPDATE ERROR (%d): %s\n", ESPhttpUpdate.getLastError(), ESPhttpUpdate.getLastErrorString().c_str());
           terminal.flush();
           break;
 
-        case HTTP_UPDATE_NO_UPDATES:
+         case HTTP_UPDATE_NO_UPDATES:
           Serial.println(" Already in Current Version");
           terminal.println("Already in Current Version");
           terminal.println(buildTag);
@@ -88,12 +81,39 @@ void DownloadBin(){
           clear=clear+1;
           break;
           
-        case HTTP_UPDATE_OK:
+         case HTTP_UPDATE_OK:
           Serial.println("Updating FIrmware...");
           terminal.println("Updating FIrmware...");
           terminal.flush();
           delay(1000);
+       }
+      }else{
+        terminal.println("Unstable Version");
+        terminal.flush();
+        t_httpUpdate_return ret = ESPhttpUpdate.update("http://ota.firmandev.tech/myota/test.php?tag="+ buildTag );
+        switch(ret) {
+         case HTTP_UPDATE_FAILED:
+          Serial.printf("UPDATE ERROR (%d): %s", ESPhttpUpdate.getLastError(), ESPhttpUpdate.getLastErrorString().c_str());
+          terminal.printf("\nUPDATE ERROR (%d): %s\n", ESPhttpUpdate.getLastError(), ESPhttpUpdate.getLastErrorString().c_str());
+          terminal.flush();
+          break;
+
+         case HTTP_UPDATE_NO_UPDATES:
+          Serial.println(" Already in Current Version");
+          terminal.println("Already in Current Version");
+          terminal.println(buildTag);
+          terminal.flush();
+          clear=clear+1;
+          break;
+          
+         case HTTP_UPDATE_OK:
+          Serial.println("Updating FIrmware...");
+          terminal.println("Updating FIrmware...");
+          terminal.flush();
+          delay(1000);
+       }
       }
+      
       if (clear==5){
         terminal.clear();
         clear = 0;
