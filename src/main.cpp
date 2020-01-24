@@ -65,9 +65,9 @@ void DownloadBin(){
   
   if (WiFi.status() == WL_CONNECTED) {
       //==========================downloading firmware.bin with HTTP OTA================
-       if (stable){
+       if (stable == true){
         terminal.println("Stable");
-        t_httpUpdate_return ret = ESPhttpUpdate.update("http://ota.firmandev.tech/myota/stable.php?tag="+ buildTag );
+        t_httpUpdate_return ret = ESPhttpUpdate.update("http://ota.firmandev.tech/stable/firmware.php?tag="+ buildTag );
        
         switch(ret) {
          case HTTP_UPDATE_FAILED:
@@ -90,9 +90,9 @@ void DownloadBin(){
           terminal.flush();
           delay(1000);
        }
-      }else if (!stable){
+      }else if (stable == false){
         terminal.println("Unstable");
-        t_httpUpdate_return ret = ESPhttpUpdate.update("http://ota.firmandev.tech/myota/unstable.php?tag="+ buildTag );
+        t_httpUpdate_return ret = ESPhttpUpdate.update("http://ota.firmandev.tech/unstable/firmware.php?tag="+ buildTag );
         switch(ret) {
          case HTTP_UPDATE_FAILED:
           Serial.printf("UPDATE ERROR (%d): %s", ESPhttpUpdate.getLastError(), ESPhttpUpdate.getLastErrorString().c_str());
