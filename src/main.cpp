@@ -28,6 +28,7 @@ void enableUpdateCheck();
 Ticker updateCheck(enableUpdateCheck, 30000); // timer for check update with interval 30s
 bool doUpdateCheck = true;
 bool download = true;
+bool stable = true;
 WiFiManager wifiManager;
 
 //=================== PROSEDUR & FUNGSI =====================
@@ -58,10 +59,19 @@ void DownloadBin(){
 
   Serial.println("Checking Firmware...");
   terminal.println("Checking Firmware...\n");
+  t_httpUpdate_return ret;
   if (WiFi.status() == WL_CONNECTED) {
       //==========================downloading firmware.bin with HTTP OTA================
-      t_httpUpdate_return ret = ESPhttpUpdate.update("http://ota.firmandev.tech/myota/firmware.php?tag="+ buildTag );
-
+      if (stable){
+        terminal.println("Stable Version");
+        terminal.flush();
+        t_httpUpdate_return ret = ESPhttpUpdate.update("http://ota.firmandev.tech/myota/firmware.php?tag="+ buildTag );
+      }else{
+        terminal.println("Unstable Version");
+        terminal.flush();
+        t_httpUpdate_return ret = ESPhttpUpdate.update("http://ota.firmandev.tech/myota/test.php?tag="+ buildTag );
+      }
+      
       switch(ret) {
         case HTTP_UPDATE_FAILED:
           Serial.printf("UPDATE ERROR (%d): %s", ESPhttpUpdate.getLastError(), ESPhttpUpdate.getLastErrorString().c_str());

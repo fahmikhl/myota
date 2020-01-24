@@ -27,7 +27,7 @@ deploy:
 
   on:
     all_branches: true
-  name: unstable
+  name: stable
   skip_cleanup: true
   provider: releases
   overwrite: true
