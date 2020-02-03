@@ -157,7 +157,7 @@ void loop(){
       counter++;
       Serial.println(counter);
     }
-    delay (500);
+  //  delay (500);
   }
   hold=temp;
  
