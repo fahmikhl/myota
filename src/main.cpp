@@ -146,7 +146,7 @@ int counter = 0;
 
 void loop(){
   updateCheck.update(); 
-  //Blynk.run();
+  Blynk.run();
 
   //========Bagian Program Utama, sesuaikan alatmu=========
   temp = digitalRead(button);
