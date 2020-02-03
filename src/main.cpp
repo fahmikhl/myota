@@ -144,6 +144,9 @@ unsigned long previousMillis = 0;        // will store last time LED was updated
 long OnTime = 250;           // milliseconds of on-time
 long OffTime = 750;
 
+int temp = 1;
+int hold = 0;
+
 void loop(){
   updateCheck.update(); 
   Blynk.run();
@@ -163,6 +166,13 @@ void loop(){
     ledState = HIGH;  // turn it on
     previousMillis = currentMillis;   // Remember the time
     digitalWrite(ledPin, ledState);	  // Update the actual LED
+  }
+
+temp = digitalRead(button);
+  if ( temp != hold){
+    if ( temp == LOW ){
+      resetWifi();
+    }
   }
 
   //======== Batas akhir program utama ===================
