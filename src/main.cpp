@@ -125,11 +125,11 @@ void setup(){
   terminal.clear();
   Serial.begin(9600);
   terminal.println("Booting........");
-   wifiManager.autoConnect("DevOps");
+//  wifiManager.autoConnect("DevOps");
  /* if (!wifiManager.autoConnect()) {
     resetWifi();
   } */
-  conBlynk();
+//  conBlynk();
   terminal.println("Current Version: ");
   terminal.println(buildTag);
   updateCheck.start();
@@ -140,41 +140,42 @@ void setup(){
 }
 
 int ledState = 0;             // ledState used to set the LED
-unsigned long previousMillis = 0;        // will store last time LED was updated
-long OnTime = 250;           // milliseconds of on-time
-long OffTime = 750;
 
 int temp = 1;
 int hold = 0;
+int counter = 0;
 
 void loop(){
   updateCheck.update(); 
   Blynk.run();
 
   //========Bagian Program Utama, sesuaikan alatmu=========
-  
-  unsigned long currentMillis = millis();
- 
- if((ledState == HIGH) && (currentMillis - previousMillis >= OnTime))
-  {
-    ledState = LOW;  // Turn it off
-    previousMillis = currentMillis;  // Remember the time
-    digitalWrite(ledPin, ledState);  // Update the actual LED
-  }
-  else if ((ledState == LOW) && (currentMillis - previousMillis >= OffTime))
-  {
-    ledState = HIGH;  // turn it on
-    previousMillis = currentMillis;   // Remember the time
-    digitalWrite(ledPin, ledState);	  // Update the actual LED
-  }
-
-temp = digitalRead(button);
+  temp = digitalRead(button);
+  Serial.println(temp);
   if ( temp != hold){
     if ( temp == LOW ){
-      resetWifi();
+      counter++;
+      Serial.println(counter);
     }
+    delay (500);
+  }
+  hold=temp;
+ 
+  if(counter == 1)
+  {
+    analogWrite(ledPin, 200); // Update the actual LED nyala redup
   }
 
+  if (counter == 2)
+  {
+    analogWrite(ledPin, 1024);  // Update the actual LED nyala terang
+  }
+
+  if (counter == 3)
+  {
+    analogWrite(ledPin, ledState);
+    counter = 0;    // reset counter
+  }
   //======== Batas akhir program utama ===================
 
   if (doUpdateCheck == true){
