@@ -86,7 +86,6 @@ void DownloadBin(){
           Serial.println("Updating FIrmware...");
           terminal.println("Updating FIrmware...");
           terminal.flush();
-          delay(1000);
        }
       }else if (stable == false){
         terminal.println("Unstable");
@@ -123,13 +122,13 @@ void DownloadBin(){
 
 void setup(){
   terminal.clear();
-  Serial.begin(9600);
+  //Serial.begin(9600);
   terminal.println("Booting........");
-//  wifiManager.autoConnect("DevOps");
+  wifiManager.autoConnect("DevOps");
  /* if (!wifiManager.autoConnect()) {
     resetWifi();
   } */
-//  conBlynk();
+  conBlynk();
   terminal.println("Current Version: ");
   terminal.println(buildTag);
   updateCheck.start();
@@ -147,17 +146,17 @@ int counter = 0;
 
 void loop(){
   updateCheck.update(); 
-  Blynk.run();
+  //Blynk.run();
 
   //========Bagian Program Utama, sesuaikan alatmu=========
   temp = digitalRead(button);
-  Serial.println(temp);
+ // Serial.println(temp);
   if ( temp != hold){
     if ( temp == LOW ){
       counter++;
       Serial.println(counter);
     }
-  //  delay (500);
+    delay (100);
   }
   hold=temp;
  
