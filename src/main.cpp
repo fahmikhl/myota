@@ -21,9 +21,8 @@ char server[] = "blynk-cloud.com";
 
 int clear = 0;
 const int ESP_LED = 2;
-int ledpin = 5; //D1
-int button = 4; //D2
-int buttonState=0;
+int ledPin =  4; //D2     // the number of the LED pin
+int button = 14; //D1
 WidgetTerminal terminal(V12);
 BlynkTimer timer;
 void enableUpdateCheck();
@@ -55,7 +54,6 @@ void resetWifi(){
   ESP.reset();
   delay(3000);
 }
-
 
 //=====================================Download Firmware=====================================
 void DownloadBin(){
@@ -125,9 +123,9 @@ void DownloadBin(){
 
 void setup(){
   terminal.clear();
-  Serial.begin(115200);
+  Serial.begin(9600);
   terminal.println("Booting........");
-  wifiManager.autoConnect("DevOps");
+   wifiManager.autoConnect("DevOps");
  /* if (!wifiManager.autoConnect()) {
     resetWifi();
   } */
@@ -135,25 +133,38 @@ void setup(){
   terminal.println("Current Version: ");
   terminal.println(buildTag);
   updateCheck.start();
-  pinMode(ledpin, OUTPUT);
-  pinMode(button, INPUT);
+  pinMode(ledPin, OUTPUT);
+  pinMode(button, INPUT_PULLUP);
   pinMode(ESP_LED, OUTPUT);
   updateCheck.start(); 
 }
+
+int ledState = 0;             // ledState used to set the LED
+unsigned long previousMillis = 0;        // will store last time LED was updated
+long OnTime = 250;           // milliseconds of on-time
+long OffTime = 750;
 
 void loop(){
   updateCheck.update(); 
   Blynk.run();
 
   //========Bagian Program Utama, sesuaikan alatmu=========
-  buttonState=digitalRead(button); 
-  if (buttonState==1){
-    resetWifi();
+  
+  unsigned long currentMillis = millis();
+ 
+ if((ledState == HIGH) && (currentMillis - previousMillis >= OnTime))
+  {
+    ledState = LOW;  // Turn it off
+    previousMillis = currentMillis;  // Remember the time
+    digitalWrite(ledPin, ledState);  // Update the actual LED
   }
-  digitalWrite(ledpin, HIGH);
-  delay(500);
-  digitalWrite(ledpin, LOW);
-  delay(500);
+  else if ((ledState == LOW) && (currentMillis - previousMillis >= OffTime))
+  {
+    ledState = HIGH;  // turn it on
+    previousMillis = currentMillis;   // Remember the time
+    digitalWrite(ledPin, ledState);	  // Update the actual LED
+  }
+
   //======== Batas akhir program utama ===================
 
   if (doUpdateCheck == true){
