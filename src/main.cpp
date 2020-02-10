@@ -48,20 +48,13 @@ void conBlynk(){
 }
 
 //==================Wifi-Setting==========================
-void setWifi(){
-  const char* ssid = "Orasah Maido";
-  const char* password = "takonglencoba";
-  WiFi.begin(ssid, password);
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(2000);
-    Serial.println("Connecting...");
-  }
-  if (WiFi.status() == WL_CONNECTED) {
-     Serial.println("Connected !!");
-     terminal.println("WiFi Connected");
-     digitalWrite(ESP_LED, LOW);
-  }
+void resetWifi(){
+  wifiManager.resetSettings();
+  delay(1000);
+  ESP.reset();
+  delay(3000);
 }
+
 
 //=====================================Download Firmware=====================================
 void DownloadBin(){
@@ -129,21 +122,21 @@ void DownloadBin(){
 }
 
 void setup(){
-  Serial.begin(9600);
   terminal.clear();
   terminal.println("Booting........");
-  setWifi();
+  wifiManager.autoConnect("DevOps");
   conBlynk();
   terminal.println("Current Version: ");
   terminal.println(buildTag);
+  updateCheck.start();
   pinMode(ledPin, OUTPUT);
   pinMode(button, INPUT_PULLUP);
   pinMode(ESP_LED, OUTPUT);
-  updateCheck.start(); 
 }
 
 int ledState = 0;             // ledState used to set the LED
 unsigned long previousMillis = 0;        // will store last time LED was updated
+unsigned long currentMillis;
 long OnTime = 250;           // milliseconds of on-time
 long OffTime = 750;
 
@@ -165,21 +158,26 @@ temp = digitalRead(button);
     delay(50); //delay untuk menghindari bouncing
   }  
   hold = temp;
-if (counter%3 == 0){
-  unsigned long currentMillis = millis();
+if (counter == 2){
+   currentMillis = millis();
  
-   if((ledState == HIGH) && (currentMillis - previousMillis >= OnTime))
-    {
-      ledState = LOW;  // Turn it off
-      previousMillis = currentMillis;  // Remember the time
-      digitalWrite(ledPin, ledState);  // Update the actual LED
-    }
-    else if ((ledState == LOW) && (currentMillis - previousMillis >= OffTime))
-    {
-      ledState = HIGH;  // turn it on
-      previousMillis = currentMillis;   // Remember the time
-      digitalWrite(ledPin, ledState);	  // Update the actual LED
-    }
+ if((ledState == HIGH) && (currentMillis - previousMillis >= OnTime))
+  {
+    ledState = LOW;  // Turn it off
+    previousMillis = currentMillis;  // Remember the time
+    digitalWrite(ledPin, ledState);  // Update the actual LED
+  }
+  else if ((ledState == LOW) && (currentMillis - previousMillis >= OffTime))
+  {
+    ledState = HIGH;  // turn it on
+    previousMillis = currentMillis;   // Remember the time
+    digitalWrite(ledPin, ledState);   // Update the actual LED
+  }
+ }
+ if (counter ==3 ){
+   counter = 0;
+   currentMillis = 0;
+   digitalWrite(ledPin, LOW);
  } 
  
   //======== Batas akhir program utama ===================
@@ -195,4 +193,8 @@ BLYNK_WRITE(V25){
      DownloadBin();
   } 
 }
-
+BLYNK_WRITE(V24){
+    if (param.asInt() == 1) {  
+      resetWifi();
+  } 
+}
