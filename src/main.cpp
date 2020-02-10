@@ -8,7 +8,7 @@
 #include <ArduinoJson.h>
 #include <Ticker.h>
 //================Version Steble or Unstable Conf ========
-bool stable = true;
+bool stable = false;
 
 //==============================INISIALISASI=====================================
 #define BLYNK_PRINT Serial
@@ -48,11 +48,19 @@ void conBlynk(){
 }
 
 //==================Wifi-Setting==========================
-void resetWifi(){
-  wifiManager.resetSettings();
-  delay(1000);
-  ESP.reset();
-  delay(3000);
+void setWifi(){
+  const char* ssid = "Orasah Maido";
+  const char* password = "takonglencoba";
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(2000);
+    Serial.println("Connecting...");
+  }
+  if (WiFi.status() == WL_CONNECTED) {
+     Serial.println("Connected !!");
+     terminal.println("WiFi Connected");
+     digitalWrite(ESP_LED, LOW);
+  }
 }
 
 //=====================================Download Firmware=====================================
@@ -121,19 +129,23 @@ void DownloadBin(){
 }
 
 void setup(){
+  Serial.begin(9600);
   terminal.clear();
   terminal.println("Booting........");
-  wifiManager.autoConnect("DevOps");
+  setWifi();
   conBlynk();
   terminal.println("Current Version: ");
   terminal.println(buildTag);
-  updateCheck.start();
   pinMode(ledPin, OUTPUT);
   pinMode(button, INPUT_PULLUP);
   pinMode(ESP_LED, OUTPUT);
+  updateCheck.start(); 
 }
 
 int ledState = 0;             // ledState used to set the LED
+unsigned long previousMillis = 0;        // will store last time LED was updated
+long OnTime = 250;           // milliseconds of on-time
+long OffTime = 750;
 
 int temp = 1;
 int hold = 0;
@@ -144,31 +156,36 @@ void loop(){
   Blynk.run();
 
   //========Bagian Program Utama, sesuaikan alatmu=========
-  temp = digitalRead(button);
+temp = digitalRead(button);
   if ( temp != hold){
     if ( temp == LOW ){
       counter++;
       Serial.println(counter);
     }
-    delay (100);
-  }
-  hold=temp;
+    delay(50); //delay untuk menghindari bouncing
+  }  
+  hold = temp;
+if (counter%3 == 0){
+  unsigned long currentMillis = millis();
  
-  if(counter == 1)
-  {
-    analogWrite(ledPin, 200); // Update the actual LED nyala redup
-  }
-
-  if (counter == 2)
-  {
-    analogWrite(ledPin, 1024);  // Update the actual LED nyala terang
-  }
-
-  if (counter == 3)
-  {
-    analogWrite(ledPin, ledState);
-    counter = 0;    // reset counter
-  }
+   if((ledState == HIGH) && (currentMillis - previousMillis >= OnTime))
+    {
+      ledState = LOW;  // Turn it off
+      previousMillis = currentMillis;  // Remember the time
+      digitalWrite(ledPin, ledState);  // Update the actual LED
+    }
+    else if ((ledState == LOW) && (currentMillis - previousMillis >= OffTime))
+    {
+      ledState = HIGH;  // turn it on
+      previousMillis = currentMillis;   // Remember the time
+      digitalWrite(ledPin, ledState);	  // Update the actual LED
+    }
+    
+ }
+ else {
+     digitalWrite(ledPin, LOW);
+  } 
+ 
   //======== Batas akhir program utama ===================
 
   if (doUpdateCheck == true){
@@ -182,8 +199,4 @@ BLYNK_WRITE(V25){
      DownloadBin();
   } 
 }
-BLYNK_WRITE(V24){
-    if (param.asInt() == 1) {  
-      resetWifi();
-  } 
-}
+
