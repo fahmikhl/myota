@@ -55,7 +55,6 @@ void resetWifi(){
   delay(3000);
 }
 
-
 //=====================================Download Firmware=====================================
 void DownloadBin(){
 
@@ -135,10 +134,6 @@ void setup(){
 }
 
 int ledState = 0;             // ledState used to set the LED
-unsigned long previousMillis = 0;        // will store last time LED was updated
-unsigned long currentMillis;
-long OnTime = 250;           // milliseconds of on-time
-long OffTime = 750;
 
 int temp = 1;
 int hold = 0;
@@ -149,37 +144,31 @@ void loop(){
   Blynk.run();
 
   //========Bagian Program Utama, sesuaikan alatmu=========
-temp = digitalRead(button);
+  temp = digitalRead(button);
   if ( temp != hold){
     if ( temp == LOW ){
       counter++;
       Serial.println(counter);
     }
-    delay(50); //delay untuk menghindari bouncing
-  }  
-  hold = temp;
-if (counter == 2){
-   currentMillis = millis();
- 
- if((ledState == HIGH) && (currentMillis - previousMillis >= OnTime))
-  {
-    ledState = LOW;  // Turn it off
-    previousMillis = currentMillis;  // Remember the time
-    digitalWrite(ledPin, ledState);  // Update the actual LED
+    delay (100);
   }
-  else if ((ledState == LOW) && (currentMillis - previousMillis >= OffTime))
-  {
-    ledState = HIGH;  // turn it on
-    previousMillis = currentMillis;   // Remember the time
-    digitalWrite(ledPin, ledState);   // Update the actual LED
-  }
- }
- if (counter ==3 ){
-   counter = 0;
-   currentMillis = 0;
-   digitalWrite(ledPin, LOW);
- } 
+  hold=temp;
  
+  if(counter == 1)
+  {
+    analogWrite(ledPin, 200); // Update the actual LED nyala redup
+  }
+
+  if (counter == 2)
+  {
+    analogWrite(ledPin, 1024);  // Update the actual LED nyala terang
+  }
+
+  if (counter == 3)
+  {
+    analogWrite(ledPin, ledState);
+    counter = 0;    // reset counter
+  }
   //======== Batas akhir program utama ===================
 
   if (doUpdateCheck == true){
