@@ -2,6 +2,10 @@
 	"folders": [
 		{
 			"path": "C:\\Users\\FAHI\\Documents\\PlatformIO\\Projects\\myota12"
+		},
+		{
+			"name": "Test",
+			"path": "C:\\Users\\FAHI\\Documents\\PlatformIO\\Projects\\Test"
 		}
 	],
 	"settings": {

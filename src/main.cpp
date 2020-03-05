@@ -47,6 +47,8 @@ void conBlynk(){
   }  
 }
 
+
+
 //==================Wifi-Setting==========================
 void resetWifi(){
   wifiManager.resetSettings();
@@ -119,6 +121,7 @@ void DownloadBin(){
       }
   }
 }
+
 
 void setup(){
   terminal.clear();
